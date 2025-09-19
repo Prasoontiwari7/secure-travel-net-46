@@ -1,39 +1,42 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Shield, Smartphone, Brain, MapPin, Users, Zap } from "lucide-react";
-import heroAnimated from "@/assets/animations/hero-tourists-animated.png";
-import heroStatic from "@/assets/animations/hero-tourists-static.png";
+import { useNavigate } from 'react-router-dom';
+import { FloatingTravelers } from '@/components/3d/FloatingTravelers';
 import digitalIdIcon from "@/assets/icons/digital-id-icon.png";
 import aiDetectionIcon from "@/assets/icons/ai-detection-icon.png";
 import geoFenceIcon from "@/assets/icons/geo-fence-icon.png";
 import sosAlertIcon from "@/assets/icons/sos-alert-icon.png";
 
 const Hero = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: -(e.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const handleGetStarted = () => {
+    navigate('/auth');
+  };
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated Tourist Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="relative w-full h-full">
-          <img 
-            src={heroAnimated}
-            alt="Tourists exploring and traveling"
-            className="w-full h-full object-cover object-center animate-subtle-parallax"
-            style={{
-              animation: 'float 6s ease-in-out infinite'
-            }}
-          />
-          <img 
-            src={heroStatic}
-            alt="Tourists exploring and traveling"
-            className="w-full h-full object-cover object-center absolute inset-0 opacity-0 transition-opacity duration-500"
-            onError={(e) => {
-              e.currentTarget.style.opacity = '1';
-            }}
-          />
-          {/* Gradient Overlay for Text Readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-accent/70"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-background/10"></div>
-        </div>
-      </div>
+      {/* 3D Floating Travelers Background */}
+      <FloatingTravelers mousePosition={mousePosition} />
+      
+      {/* Gradient Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-background/10 z-0"></div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
@@ -46,34 +49,62 @@ const Hero = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-            <span className="text-foreground">Smart Tourist</span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl font-bold leading-tight mb-6"
+          >
+            <span className="text-foreground">Travel Safe with</span>
             <br />
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Safety Monitoring
+              GoSecure
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
             Revolutionary AI-driven platform that uses blockchain technology, geo-fencing, 
             and real-time monitoring to ensure secure and seamless travel experiences for tourists worldwide.
-          </p>
+          </motion.p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          >
+            <Button 
+              onClick={handleGetStarted}
+              size="lg" 
+              className="text-lg px-8 py-4 bg-gradient-primary hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-glow"
+            >
               Get Started
               <Zap className="w-5 h-5 ml-2" />
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 hover:bg-primary/5">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-lg px-8 py-4 border-2 hover:bg-primary/5 hover:scale-105 transition-all duration-300"
+            >
               View Demo
               <Shield className="w-5 h-5 ml-2" />
             </Button>
-          </div>
+          </motion.div>
 
           {/* Feature Icons Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+          >
             <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
               <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
                 <img src={digitalIdIcon} alt="Digital ID" className="w-full h-full object-contain" />
@@ -105,7 +136,7 @@ const Hero = () => {
               <h3 className="font-semibold text-primary-foreground mb-2">SOS Alerts</h3>
               <p className="text-sm text-primary-foreground/80 text-center">Emergency response system</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Trust Indicators */}
           <div className="mt-16 pt-8 border-t border-border/50">
