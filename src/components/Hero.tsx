@@ -1,0 +1,134 @@
+import { Button } from "@/components/ui/button";
+import { Shield, Smartphone, Brain, MapPin, Users, Zap } from "lucide-react";
+import heroAnimated from "@/assets/animations/hero-tourists-animated.png";
+import heroStatic from "@/assets/animations/hero-tourists-static.png";
+import digitalIdIcon from "@/assets/icons/digital-id-icon.png";
+import aiDetectionIcon from "@/assets/icons/ai-detection-icon.png";
+import geoFenceIcon from "@/assets/icons/geo-fence-icon.png";
+import sosAlertIcon from "@/assets/icons/sos-alert-icon.png";
+
+const Hero = () => {
+  return (
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Animated Tourist Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="relative w-full h-full">
+          <img 
+            src={heroAnimated}
+            alt="Tourists exploring and traveling"
+            className="w-full h-full object-cover object-center animate-subtle-parallax"
+            style={{
+              animation: 'float 6s ease-in-out infinite'
+            }}
+          />
+          <img 
+            src={heroStatic}
+            alt="Tourists exploring and traveling"
+            className="w-full h-full object-cover object-center absolute inset-0 opacity-0 transition-opacity duration-500"
+            onError={(e) => {
+              e.currentTarget.style.opacity = '1';
+            }}
+          />
+          {/* Gradient Overlay for Text Readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-accent/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-background/10"></div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="text-center max-w-5xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-2 mb-8">
+            <Shield className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">
+              AI-Powered • Blockchain-Secured • Privacy-First
+            </span>
+          </div>
+
+          {/* Main Headline */}
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <span className="text-foreground">Smart Tourist</span>
+            <br />
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
+              Safety Monitoring
+            </span>
+          </h1>
+
+          {/* Subheadline */}
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+            Revolutionary AI-driven platform that uses blockchain technology, geo-fencing, 
+            and real-time monitoring to ensure secure and seamless travel experiences for tourists worldwide.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
+              Get Started
+              <Zap className="w-5 h-5 ml-2" />
+            </Button>
+            <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 hover:bg-primary/5">
+              View Demo
+              <Shield className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+
+          {/* Feature Icons Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
+              <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
+                <img src={digitalIdIcon} alt="Digital ID" className="w-full h-full object-contain" />
+              </div>
+              <h3 className="font-semibold text-primary-foreground mb-2">Digital ID</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Blockchain-secured tourist identification</p>
+            </div>
+
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
+              <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
+                <img src={aiDetectionIcon} alt="AI Detection" className="w-full h-full object-contain" />
+              </div>
+              <h3 className="font-semibold text-primary-foreground mb-2">AI Detection</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Smart anomaly detection & alerts</p>
+            </div>
+
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
+              <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
+                <img src={geoFenceIcon} alt="Geo-Fencing" className="w-full h-full object-contain" />
+              </div>
+              <h3 className="font-semibold text-primary-foreground mb-2">Geo-Fencing</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Real-time location monitoring</p>
+            </div>
+
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
+              <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
+                <img src={sosAlertIcon} alt="SOS Alerts" className="w-full h-full object-contain" />
+              </div>
+              <h3 className="font-semibold text-primary-foreground mb-2">SOS Alerts</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Emergency response system</p>
+            </div>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-16 pt-8 border-t border-border/50">
+            <p className="text-sm text-muted-foreground mb-4">Trusted by Government Agencies & Tourism Departments</p>
+            <div className="flex justify-center items-center space-x-8 opacity-60">
+              <div className="flex items-center space-x-2">
+                <Shield className="w-5 h-5" />
+                <span className="text-sm font-medium">Ministry of Tourism</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Users className="w-5 h-5" />
+                <span className="text-sm font-medium">Police Department</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-5 h-5" />
+                <span className="text-sm font-medium">State Tourism Board</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
