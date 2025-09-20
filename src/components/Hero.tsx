@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Shield, Smartphone, Brain, MapPin, Users, Zap } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
-import { FloatingTravelers } from '@/components/3d/FloatingTravelers';
+import { Interactive3DWorld } from '@/components/3d/Interactive3DWorld';
 import digitalIdIcon from "@/assets/icons/digital-id-icon.png";
 import aiDetectionIcon from "@/assets/icons/ai-detection-icon.png";
 import geoFenceIcon from "@/assets/icons/geo-fence-icon.png";
@@ -31,8 +31,8 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* 3D Floating Travelers Background */}
-      <FloatingTravelers mousePosition={mousePosition} />
+      {/* 3D Interactive World Background */}
+      <Interactive3DWorld mousePosition={mousePosition} />
       
       {/* Gradient Overlay for Text Readability */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 z-0"></div>
