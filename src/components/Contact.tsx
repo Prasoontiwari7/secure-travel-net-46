@@ -1,9 +1,63 @@
-import { Phone, Mail, MessageCircle, Clock, Shield, MapPin } from "lucide-react";
+import { useState } from "react";
+import { Phone, Mail, MessageCircle, Clock, Shield, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { error } = await supabase
+        .from('support_messages')
+        .insert({
+          user_id: user?.id || null,
+          name: formData.name,
+          email: formData.email,
+          message: `Subject: ${formData.subject}\n\n${formData.message}`,
+          status: 'open'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error: any) {
+      toast({
+        title: "Error sending message",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   const emergencyNumbers = [
     {
       title: "Tourist Emergency Helpline",
@@ -69,38 +123,71 @@ const Contact = () => {
               <MessageCircle className="w-6 h-6 text-primary" />
               Send us a message
             </h3>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Your Name
                   </label>
-                  <Input placeholder="Enter your name" />
+                  <Input 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter your name"
+                    required
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Email Address
                   </label>
-                  <Input type="email" placeholder="your@email.com" />
+                  <Input 
+                    name="email"
+                    type="email" 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="your@email.com"
+                    required
+                  />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Subject
                 </label>
-                <Input placeholder="What can we help you with?" />
+                <Input 
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  placeholder="What can we help you with?"
+                  required
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Message
                 </label>
-                <Textarea 
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Tell us more about your inquiry..."
                   rows={6}
+                  required
                 />
               </div>
-              <Button variant="hero" className="w-full">
-                Send Message
+              <Button type="submit" variant="hero" className="w-full" disabled={loading}>
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
 

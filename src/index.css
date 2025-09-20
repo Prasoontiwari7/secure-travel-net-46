@@ -138,6 +138,31 @@ All colors MUST be HSL. Professional gradients and semantic tokens.
   }
 }
 
+/* Custom Gradient Classes */
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-secondary {
+  background: var(--gradient-secondary);
+}
+
+.bg-gradient-accent {
+  background: var(--gradient-accent);
+}
+
+.bg-gradient-hero {
+  background: var(--gradient-hero);
+}
+
+.bg-gradient-card {
+  background: var(--gradient-card);
+}
+
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
 /* Custom Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px) scale(1); }

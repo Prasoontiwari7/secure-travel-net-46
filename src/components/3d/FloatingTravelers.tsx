@@ -1,54 +1,41 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Traveler = ({ position, color, scale = 1 }: { position: [number, number, number]; color: string; scale?: number }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.01;
-      meshRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime + position[0]) * 0.5;
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.01;
+      groupRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime + position[0]) * 0.5;
     }
   });
 
-  const geometry = useMemo(() => {
-    // Create a simple traveler shape using geometry
-    const group = new THREE.Group();
-    
-    // Body (cylinder)
-    const bodyGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1.2, 8);
-    const bodyMaterial = new THREE.MeshPhongMaterial({ color: color });
-    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-    body.position.y = 0.6;
-    group.add(body);
-    
-    // Head (sphere)
-    const headGeometry = new THREE.SphereGeometry(0.25, 8, 8);
-    const headMaterial = new THREE.MeshPhongMaterial({ color: '#FFE0BD' });
-    const head = new THREE.Mesh(headGeometry, headMaterial);
-    head.position.y = 1.4;
-    group.add(head);
-    
-    // Backpack (box)
-    const backpackGeometry = new THREE.BoxGeometry(0.4, 0.6, 0.2);
-    const backpackMaterial = new THREE.MeshPhongMaterial({ color: '#8B4513' });
-    const backpack = new THREE.Mesh(backpackGeometry, backpackMaterial);
-    backpack.position.set(0, 0.8, -0.3);
-    group.add(backpack);
-    
-    return group;
-  }, [color]);
+  // Optimize geometry creation with better memory management
+  const [bodyGeometry, headGeometry, backpackGeometry] = useMemo(() => [
+    new THREE.CylinderGeometry(0.3, 0.3, 1.2, 6),
+    new THREE.SphereGeometry(0.25, 6, 6), 
+    new THREE.BoxGeometry(0.4, 0.6, 0.2)
+  ], []);
+
+  const [bodyMaterial, headMaterial, backpackMaterial] = useMemo(() => [
+    new THREE.MeshLambertMaterial({ color: color }),
+    new THREE.MeshLambertMaterial({ color: '#FFE0BD' }),
+    new THREE.MeshLambertMaterial({ color: '#8B4513' })
+  ], [color]);
 
   return (
     <Float speed={2} rotationIntensity={0.1} floatIntensity={0.2}>
-      <primitive 
-        ref={meshRef} 
-        object={geometry} 
-        position={position} 
-        scale={[scale, scale, scale]} 
-      />
+      <group ref={groupRef} position={position} scale={[scale, scale, scale]}>
+        {/* Body */}
+        <mesh geometry={bodyGeometry} material={bodyMaterial} position={[0, 0.6, 0]} />
+        {/* Head */}
+        <mesh geometry={headGeometry} material={headMaterial} position={[0, 1.4, 0]} />
+        {/* Backpack */}
+        <mesh geometry={backpackGeometry} material={backpackMaterial} position={[0, 0.8, -0.3]} />
+      </group>
     </Float>
   );
 };
@@ -113,7 +100,16 @@ const FloatingIcons = () => {
 export const FloatingTravelers: React.FC<{ mousePosition: { x: number; y: number } }> = ({ mousePosition }) => {
   return (
     <div className="absolute inset-0 -z-10">
-      <Canvas>
+      <Canvas
+        gl={{ 
+          antialias: false, 
+          alpha: true, 
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: false
+        }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.8 }}
+      >
         <PerspectiveCamera makeDefault position={[0, 2, 8]} />
         
         {/* Lighting */}
@@ -125,19 +121,22 @@ export const FloatingTravelers: React.FC<{ mousePosition: { x: number; y: number
         />
         <pointLight position={[-10, -10, -5]} intensity={0.5} color="#4ECDC4" />
         
-        {/* Environment */}
-        <Environment preset="sunset" />
-        
-        {/* Background elements */}
-        <WorldMap />
-        <FloatingIcons />
-        
-        {/* Travelers */}
-        <Traveler position={[-4, 0, 2]} color="#FF6B35" scale={0.8} />
-        <Traveler position={[3, 0.5, 1]} color="#4ECDC4" scale={1.0} />
-        <Traveler position={[-1, -0.5, 3]} color="#45B7D1" scale={0.9} />
-        <Traveler position={[6, 1, 0]} color="#FFA07A" scale={0.7} />
-        <Traveler position={[-6, -1, 1]} color="#98D8C8" scale={1.1} />
+        {/* Suspense wrapper for better loading performance */}
+        <Suspense fallback={null}>
+          {/* Environment */}
+          <Environment preset="sunset" />
+          
+          {/* Background elements */}
+          <WorldMap />
+          <FloatingIcons />
+          
+          {/* Travelers */}
+          <Traveler position={[-4, 0, 2]} color="#FF6B35" scale={0.8} />
+          <Traveler position={[3, 0.5, 1]} color="#4ECDC4" scale={1.0} />
+          <Traveler position={[-1, -0.5, 3]} color="#45B7D1" scale={0.9} />
+          <Traveler position={[6, 1, 0]} color="#FFA07A" scale={0.7} />
+          <Traveler position={[-6, -1, 1]} color="#98D8C8" scale={1.1} />
+        </Suspense>
         
         {/* Parallax effect based on mouse position */}
         <group 
