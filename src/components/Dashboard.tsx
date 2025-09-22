@@ -21,6 +21,7 @@ import {
 import { useAuth } from '@/components/auth/AuthProvider';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { GoogleMap } from '@/components/GoogleMap';
 
 interface DashboardStats {
   activeTourists: number;
@@ -376,6 +377,9 @@ export const Dashboard: React.FC = () => {
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6">
+              {/* Google Maps Section */}
+              <GoogleMap />
+              
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>

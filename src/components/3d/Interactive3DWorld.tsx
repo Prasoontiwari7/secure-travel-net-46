@@ -2,6 +2,7 @@ import React, { useRef, useMemo, Suspense, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Float, Environment, Text, OrbitControls, Stars, Cloud } from '@react-three/drei';
 import * as THREE from 'three';
+import EarthGlobe from './EarthGlobe';
 
 const InteractiveTraveler = ({ 
   position, 
@@ -142,30 +143,6 @@ const FloatingFeatureCard = ({
   );
 };
 
-const AnimatedGlobe = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.003;
-      meshRef.current.rotation.x += 0.001;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef} position={[0, -3, -12]} scale={[10, 10, 10]}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshPhongMaterial 
-        color="#1a365d" 
-        transparent 
-        opacity={0.2}
-        wireframe={true}
-        emissive="#4ECDC4"
-        emissiveIntensity={0.1}
-      />
-    </mesh>
-  );
-};
 
 const FloatingIcons = () => {
   const iconsRef = useRef<THREE.Group>(null);
@@ -242,37 +219,26 @@ export const Interactive3DWorld: React.FC<{
       >
         <PerspectiveCamera makeDefault position={[0, 2, 10]} />
         
-        {/* Enhanced Lighting */}
-        <ambientLight intensity={0.3} />
+        <ambientLight intensity={0.4} />
         <directionalLight 
           position={[10, 10, 5]} 
-          intensity={1.2}
+          intensity={1}
           color="#FFE0BD"
           castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
         />
-        <pointLight position={[-10, -10, -5]} intensity={0.8} color="#4ECDC4" />
-        <spotLight
-          position={[0, 15, 0]}
-          angle={Math.PI / 4}
-          penumbra={0.1}
-          intensity={0.5}
-          color="#45B7D1"
-          castShadow
-        />
+        <pointLight position={[-10, -10, -5]} intensity={0.6} color="#4ECDC4" />
         
         <Suspense fallback={null}>
-          <Environment preset="sunset" />
-          <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} fade speed={1} />
+            <Environment preset="city" />
+            <Stars radius={300} depth={60} count={10000} factor={4} saturation={0} fade speed={0.5} />
           
           {/* Background elements */}
-          <AnimatedGlobe />
+          <EarthGlobe />
           <FloatingIcons />
           
-          {/* Floating clouds for atmosphere */}
-          <Cloud opacity={0.1} speed={0.4} segments={20} />
-          <Cloud opacity={0.05} speed={0.2} segments={25} position={[10, -5, -10]} />
+          {/* Floating clouds for atmosphere - reduced opacity */}
+          <Cloud opacity={0.05} speed={0.4} segments={20} position={[5, 2, -8]} />
+          <Cloud opacity={0.03} speed={0.2} segments={25} position={[-8, -3, -12]} />
           
           {/* Interactive Travelers */}
           <InteractiveTraveler 
@@ -347,22 +313,20 @@ export const Interactive3DWorld: React.FC<{
         <OrbitControls 
           enableZoom={false} 
           enablePan={false}
-          enableRotate={true}
+          enableRotate={false}
           autoRotate={true}
-          autoRotateSpeed={0.5}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 6}
+          autoRotateSpeed={0.2}
         />
         
-        {/* Depth particles */}
-        <group rotation={[mousePosition.y * 0.1, mousePosition.x * 0.1, 0]}>
+        {/* Depth particles - reduced opacity for better visibility */}
+        <group rotation={[mousePosition.y * 0.05, mousePosition.x * 0.05, 0]}>
           <mesh position={[0, 0, -15]}>
-            <ringGeometry args={[8, 12, 64]} />
-            <meshBasicMaterial color="#4ECDC4" transparent opacity={0.05} />
+            <ringGeometry args={[8, 12, 32]} />
+            <meshBasicMaterial color="#4ECDC4" transparent opacity={0.02} />
           </mesh>
           <mesh position={[0, 0, -20]}>
-            <ringGeometry args={[12, 16, 64]} />
-            <meshBasicMaterial color="#45B7D1" transparent opacity={0.03} />
+            <ringGeometry args={[12, 16, 32]} />
+            <meshBasicMaterial color="#45B7D1" transparent opacity={0.01} />
           </mesh>
         </group>
       </Canvas>
