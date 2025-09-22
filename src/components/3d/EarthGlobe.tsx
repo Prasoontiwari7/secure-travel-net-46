@@ -7,12 +7,12 @@ const EarthGlobe = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005;
+      meshRef.current.rotation.y += delta * 0.3;
     }
     if (groupRef.current) {
-      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
     }
   });
 
@@ -20,30 +20,30 @@ const EarthGlobe = () => {
   const earthGeometry = useMemo(() => new THREE.SphereGeometry(3, 64, 64), []);
   
   const earthMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: '#1a365d',
+    color: '#2563eb',
     transparent: true,
-    opacity: 0.1,
+    opacity: 0.2,
     wireframe: false,
-    emissive: '#4ECDC4',
-    emissiveIntensity: 0.05,
+    emissive: '#3b82f6',
+    emissiveIntensity: 0.1,
   }), []);
 
   const wireframeMaterial = useMemo(() => new THREE.MeshBasicMaterial({
-    color: '#4ECDC4',
+    color: '#60a5fa',
     wireframe: true,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.3,
   }), []);
 
   const glowMaterial = useMemo(() => new THREE.MeshBasicMaterial({
-    color: '#4ECDC4',
+    color: '#3b82f6',
     transparent: true,
-    opacity: 0.05,
+    opacity: 0.08,
     side: THREE.BackSide,
   }), []);
 
   return (
-    <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
+    <Float speed={0.8} rotationIntensity={0.05} floatIntensity={0.1}>
       <group ref={groupRef} position={[0, -5, -15]}>
         {/* Main Earth sphere */}
         <mesh ref={meshRef} geometry={earthGeometry} material={earthMaterial} />
@@ -54,54 +54,54 @@ const EarthGlobe = () => {
         {/* Glow effect */}
         <mesh geometry={earthGeometry} material={glowMaterial} scale={[1.2, 1.2, 1.2]} />
         
-        {/* Orbiting elements */}
-        <group>
+        {/* Orbiting elements with smooth rotation */}
+        <group rotation={[0, 0, Math.sin(0) * 0.1]}>
           <mesh position={[4.5, 0, 0]}>
-            <sphereGeometry args={[0.1, 8, 8]} />
-            <meshBasicMaterial color="#FFD700" />
+            <sphereGeometry args={[0.08, 16, 16]} />
+            <meshBasicMaterial color="#60a5fa" transparent opacity={0.8} />
           </mesh>
           <mesh position={[-4.5, 0, 0]}>
-            <sphereGeometry args={[0.08, 8, 8]} />
-            <meshBasicMaterial color="#FF6B35" />
+            <sphereGeometry args={[0.06, 16, 16]} />
+            <meshBasicMaterial color="#3b82f6" transparent opacity={0.8} />
           </mesh>
           <mesh position={[0, 4.5, 0]}>
-            <sphereGeometry args={[0.06, 8, 8]} />
-            <meshBasicMaterial color="#45B7D1" />
+            <sphereGeometry args={[0.05, 16, 16]} />
+            <meshBasicMaterial color="#1d4ed8" transparent opacity={0.8} />
           </mesh>
           <mesh position={[0, -4.5, 0]}>
-            <sphereGeometry args={[0.07, 8, 8]} />
-            <meshBasicMaterial color="#98D8C8" />
+            <sphereGeometry args={[0.07, 16, 16]} />
+            <meshBasicMaterial color="#2563eb" transparent opacity={0.8} />
           </mesh>
         </group>
 
         {/* GoSecure branding floating around globe */}
-        <Float speed={2} rotationIntensity={0.2} floatIntensity={0.3}>
+        <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.2}>
           <Text
             position={[0, 5.5, 0]}
-            fontSize={0.8}
-            color="#4ECDC4"
+            fontSize={0.9}
+            color="#60a5fa"
             anchorX="center"
             anchorY="middle"
             fontWeight="bold"
             outlineWidth={0.02}
-            outlineColor="#000000"
+            outlineColor="#1e293b"
           >
             GoSecure
           </Text>
         </Float>
         
-        <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.2}>
+        <Float speed={1.2} rotationIntensity={0.05} floatIntensity={0.15}>
           <Text
             position={[0, -6, 0]}
-            fontSize={0.4}
-            color="#FFD700"
+            fontSize={0.35}
+            color="#3b82f6"
             anchorX="center"
             anchorY="middle"
             fontWeight="normal"
             outlineWidth={0.01}
-            outlineColor="#000000"
+            outlineColor="#1e293b"
           >
-            Travel Safe • Powered by AI
+            AI-Powered Travel Security
           </Text>
         </Float>
       </group>

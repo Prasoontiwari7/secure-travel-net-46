@@ -52,9 +52,9 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold leading-tight mb-6"
           >
-            <span className="text-foreground">Travel Safe with</span>
+            <span className="text-foreground">Secure Travel with</span>
             <br />
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
               GoSecure
             </span>
           </motion.h1>
@@ -66,8 +66,8 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
           >
-            Revolutionary AI-driven platform that uses blockchain technology, geo-fencing, 
-            and real-time monitoring to ensure secure and seamless travel experiences for tourists worldwide.
+            Next-generation AI-powered platform combining blockchain security, real-time geo-fencing, 
+            and intelligent monitoring to deliver unparalleled safety for travelers worldwide.
           </motion.p>
 
           {/* CTA Buttons */}

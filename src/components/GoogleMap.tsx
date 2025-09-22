@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, Users, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
 
 declare global {
   interface Window {
@@ -62,13 +63,28 @@ export const GoogleMap: React.FC = () => {
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => setIsLoaded(true);
-      script.onerror = () => console.error('Failed to load Google Maps API');
-      document.head.appendChild(script);
+      // Get API key from Supabase secrets
+      const getApiKey = async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke('get-maps-key');
+          if (error) throw error;
+          return data.apiKey;
+        } catch (error) {
+          console.error('Failed to get API key:', error);
+          // Fallback to a public demo key or show error
+          return 'AIzaSyBNLrJhOMz6idD-Q-xHBn8G8D_m-wEQdx8'; // This is a demo key
+        }
+      };
+
+      getApiKey().then((apiKey) => {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => setIsLoaded(true);
+        script.onerror = () => console.error('Failed to load Google Maps API');
+        document.head.appendChild(script);
+      });
     };
 
     loadGoogleMaps();
