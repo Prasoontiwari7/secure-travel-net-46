@@ -54,7 +54,7 @@ const Hero = () => {
           >
             <span className="text-foreground">Secure Travel with</span>
             <br />
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
               GoSecure
             </span>
           </motion.h1>
@@ -102,36 +102,36 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
           >
-            <div className="flex flex-col items-center p-6 bg-card/95 backdrop-blur-md rounded-xl border border-border/50 hover:shadow-glow transition-smooth group hover:scale-105">
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
               <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
                 <img src={digitalIdIcon} alt="Digital ID" className="w-full h-full object-contain" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Digital ID</h3>
-              <p className="text-sm text-muted-foreground text-center">Blockchain-secured tourist identification</p>
+              <h3 className="font-semibold text-primary-foreground mb-2">Digital ID</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Blockchain-secured tourist identification</p>
             </div>
 
-            <div className="flex flex-col items-center p-6 bg-card/95 backdrop-blur-md rounded-xl border border-border/50 hover:shadow-glow transition-smooth group hover:scale-105">
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
               <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
                 <img src={aiDetectionIcon} alt="AI Detection" className="w-full h-full object-contain" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">AI Detection</h3>
-              <p className="text-sm text-muted-foreground text-center">Smart anomaly detection & alerts</p>
+              <h3 className="font-semibold text-primary-foreground mb-2">AI Detection</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Smart anomaly detection & alerts</p>
             </div>
 
-            <div className="flex flex-col items-center p-6 bg-card/95 backdrop-blur-md rounded-xl border border-border/50 hover:shadow-glow transition-smooth group hover:scale-105">
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
               <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
                 <img src={geoFenceIcon} alt="Geo-Fencing" className="w-full h-full object-contain" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Geo-Fencing</h3>
-              <p className="text-sm text-muted-foreground text-center">Real-time location monitoring</p>
+              <h3 className="font-semibold text-primary-foreground mb-2">Geo-Fencing</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Real-time location monitoring</p>
             </div>
 
-            <div className="flex flex-col items-center p-6 bg-card/95 backdrop-blur-md rounded-xl border border-border/50 hover:shadow-glow transition-smooth group hover:scale-105">
+            <div className="flex flex-col items-center p-6 bg-card/80 backdrop-blur-md rounded-xl border border-border/30 hover:shadow-glow transition-smooth group hover:scale-105">
               <div className="w-16 h-16 mb-4 group-hover:scale-110 transition-bounce">
                 <img src={sosAlertIcon} alt="SOS Alerts" className="w-full h-full object-contain" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">SOS Alerts</h3>
-              <p className="text-sm text-muted-foreground text-center">Emergency response system</p>
+              <h3 className="font-semibold text-primary-foreground mb-2">SOS Alerts</h3>
+              <p className="text-sm text-primary-foreground/80 text-center">Emergency response system</p>
             </div>
           </motion.div>
 
