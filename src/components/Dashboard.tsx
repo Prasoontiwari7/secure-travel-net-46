@@ -21,7 +21,7 @@ import {
 import { useAuth } from '@/components/auth/AuthProvider';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { GoogleMap } from '@/components/GoogleMap';
+import OpenStreetMap from '@/components/OpenStreetMap';
 
 interface DashboardStats {
   activeTourists: number;
@@ -115,6 +115,58 @@ export const Dashboard: React.FC = () => {
       setLoading(false);
     }
   };
+
+  // Map location data for OpenStreetMap
+  const mapLocations = [
+    {
+      id: '1',
+      name: 'John Smith',
+      position: { lat: 28.6139, lng: 77.2090 }, // New Delhi
+      status: 'safe' as const,
+      type: 'tourist' as const,
+      lastSeen: '2 minutes ago'
+    },
+    {
+      id: '2', 
+      name: 'Sarah Johnson',
+      position: { lat: 19.0760, lng: 72.8777 }, // Mumbai
+      status: 'warning' as const,
+      type: 'tourist' as const,
+      lastSeen: '15 minutes ago'
+    },
+    {
+      id: '3',
+      name: 'Security Incident',
+      position: { lat: 26.9124, lng: 75.7873 }, // Jaipur
+      status: 'alert' as const,
+      type: 'incident' as const,
+      lastSeen: '1 hour ago'
+    },
+    {
+      id: '4',
+      name: 'Safe Zone - Goa',
+      position: { lat: 15.2993, lng: 74.1240 }, // Goa
+      status: 'safe' as const,
+      type: 'geofence' as const,
+      lastSeen: 'Active'
+    },
+    {
+      id: '5',
+      name: 'Mike Chen',
+      position: { lat: 15.2993, lng: 74.1240 }, // Goa
+      status: 'safe' as const,
+      type: 'tourist' as const,
+      lastSeen: '5 minutes ago'
+    },
+    {
+      id: '6',
+      name: 'Emma Wilson',
+      position: { lat: 26.9124, lng: 75.7873 }, // Jaipur  
+      status: 'alert' as const,
+      type: 'tourist' as const,
+      lastSeen: '1 hour ago'
+    }
+  ];
 
   // Mock data for demonstration
   const mockTourists: Tourist[] = [
@@ -377,8 +429,24 @@ export const Dashboard: React.FC = () => {
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6">
-              {/* Google Maps Section */}
-              <GoogleMap />
+              {/* OpenStreetMap Section */}
+              <div className="bg-card rounded-xl border border-border shadow-md p-6">
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-foreground flex items-center gap-2 mb-2">
+                    <MapPin className="w-5 h-5 text-primary" />
+                    Real-Time Location Tracking
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Interactive map showing live tourist locations, incidents, and safe zones with geolocation support.
+                  </p>
+                </div>
+                
+                <OpenStreetMap 
+                  locations={mapLocations}
+                  height="400px"
+                  className="w-full"
+                />
+              </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
