@@ -34,7 +34,7 @@ const Team = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Meet Our
-            <span className="bg-gradient-primary bg-clip-text text-transparent ml-3">
+            <span className="text-primary font-bold ml-3">
               Expert Team
             </span>
           </h2>

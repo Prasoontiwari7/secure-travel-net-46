@@ -167,7 +167,7 @@ const FeaturesPage = () => {
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               <span className="text-foreground">Advanced Features for</span>
               <br />
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              <span className="text-primary font-bold">
                 Complete Safety
               </span>
             </h1>

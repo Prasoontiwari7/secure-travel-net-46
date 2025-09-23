@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import OpenStreetMap from "@/components/OpenStreetMap";
 import { 
   Users, 
   AlertTriangle, 
@@ -79,6 +80,56 @@ const Dashboard = () => {
     { area: "Eiffel Tower, Paris", count: 134, risk: "Low" },
   ];
 
+  // Sample map locations for tourist tracking
+  const mapLocations = [
+    {
+      id: "tourist-1",
+      name: "Tourist Group A",
+      position: { lat: 28.6139, lng: 77.2090 }, // New Delhi
+      status: "safe" as const,
+      type: "tourist" as const,
+      lastSeen: "2 minutes ago"
+    },
+    {
+      id: "tourist-2", 
+      name: "Solo Traveler",
+      position: { lat: 28.6280, lng: 77.2177 }, // Connaught Place
+      status: "safe" as const,
+      type: "tourist" as const,
+      lastSeen: "5 minutes ago"
+    },
+    {
+      id: "incident-1",
+      name: "Medical Emergency",
+      position: { lat: 28.6562, lng: 77.2410 }, // Red Fort area
+      status: "alert" as const,
+      type: "incident" as const,
+      lastSeen: "1 minute ago"
+    },
+    {
+      id: "geofence-1",
+      name: "Safe Zone - Hotel District",
+      position: { lat: 28.5965, lng: 77.2006 }, // South Delhi
+      status: "safe" as const,
+      type: "geofence" as const
+    },
+    {
+      id: "tourist-3",
+      name: "Family Group",
+      position: { lat: 28.6271, lng: 77.1716 }, // Karol Bagh
+      status: "warning" as const,
+      type: "tourist" as const,
+      lastSeen: "8 minutes ago"
+    },
+    {
+      id: "geofence-2", 
+      name: "Restricted Area",
+      position: { lat: 28.6341, lng: 77.2249 }, // Central Delhi
+      status: "alert" as const,
+      type: "geofence" as const
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -102,7 +153,7 @@ const Dashboard = () => {
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               <span className="text-foreground">Real-time Safety</span>
               <br />
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              <span className="text-primary font-bold">
                 Monitoring
               </span>
             </h1>
@@ -157,25 +208,13 @@ const Dashboard = () => {
                 </div>
               </div>
               
-              {/* Map Placeholder */}
-              <div className="relative h-80 bg-gradient-to-br from-primary/5 to-accent/5 rounded-lg border border-border/50 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary/40 mx-auto mb-4" />
-                    <p className="text-muted-foreground">Interactive Map with Live Tourist Locations</p>
-                    <p className="text-sm text-muted-foreground mt-2">Real-time GPS tracking with geofenced zones</p>
-                  </div>
-                </div>
-                
-                {/* Simulated markers */}
-                <div className="absolute top-6 left-8 w-3 h-3 bg-success rounded-full animate-pulse shadow-glow"></div>
-                <div className="absolute top-16 right-12 w-3 h-3 bg-warning rounded-full animate-pulse shadow-glow"></div>
-                <div className="absolute bottom-20 left-16 w-3 h-3 bg-success rounded-full animate-pulse shadow-glow"></div>
-                <div className="absolute bottom-12 right-8 w-3 h-3 bg-destructive rounded-full animate-pulse shadow-glow"></div>
-                
-                {/* Zone overlays */}
-                <div className="absolute top-12 left-12 w-20 h-16 border-2 border-success/30 bg-success/10 rounded-lg"></div>
-                <div className="absolute bottom-16 right-16 w-16 h-12 border-2 border-destructive/30 bg-destructive/10 rounded-lg"></div>
+              {/* Interactive Map */}
+              <div className="h-80">
+                <OpenStreetMap 
+                  className="w-full" 
+                  height="320px" 
+                  locations={mapLocations}
+                />
               </div>
 
               {/* Map Controls */}

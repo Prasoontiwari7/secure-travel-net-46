@@ -91,7 +91,7 @@ const Features = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Comprehensive Safety
-            <span className="bg-gradient-primary bg-clip-text text-transparent ml-3">
+            <span className="text-primary font-bold ml-3">
               Ecosystem
             </span>
           </h2>

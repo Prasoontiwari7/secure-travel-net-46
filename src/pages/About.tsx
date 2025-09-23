@@ -72,7 +72,7 @@ const About = () => {
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               <span className="text-foreground">Revolutionizing</span>
               <br />
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              <span className="text-primary font-bold">
                 Tourist Safety
               </span>
             </h1>
@@ -96,7 +96,7 @@ const About = () => {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Creating Safer Travel
-                <span className="bg-gradient-primary bg-clip-text text-transparent ml-2">
+                <span className="text-primary font-bold ml-2">
                   Experiences
                 </span>
               </h2>
@@ -137,7 +137,7 @@ const About = () => {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 A World Where
-                <span className="bg-gradient-secondary bg-clip-text text-transparent ml-2">
+                <span className="text-accent font-bold ml-2">
                   Travel is Safe
                 </span>
               </h2>
@@ -178,7 +178,7 @@ const About = () => {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Tourism Safety
-              <span className="bg-gradient-primary bg-clip-text text-transparent ml-3">
+              <span className="text-primary font-bold ml-3">
                 Challenges
               </span>
             </h2>
@@ -208,7 +208,7 @@ const About = () => {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Technology-Driven
-              <span className="bg-gradient-primary bg-clip-text text-transparent ml-3">
+              <span className="text-primary font-bold ml-3">
                 Solutions
               </span>
             </h2>
@@ -245,7 +245,7 @@ const About = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Projected
-              <span className="bg-gradient-primary bg-clip-text text-transparent ml-3">
+              <span className="text-primary font-bold ml-3">
                 Impact
               </span>
             </h2>
