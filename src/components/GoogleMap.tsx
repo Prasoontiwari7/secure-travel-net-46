@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { MapPin, Users, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
+import OpenStreetMap from '@/components/OpenStreetMap';
 
 declare global {
   interface Window {
@@ -285,6 +286,12 @@ export const GoogleMap: React.FC = () => {
           
           {/* Google Maps Container */}
           <div ref={mapRef} className="w-full h-96 rounded-lg border" />
+          
+          {/* OpenStreetMap Alternative */}
+          <div className="mt-4">
+            <h4 className="text-sm font-medium mb-2">OpenStreetMap View</h4>
+            <OpenStreetMap className="w-full" height="300px" />
+          </div>
         </div>
       </CardContent>
     </Card>
