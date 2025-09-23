@@ -48,7 +48,7 @@ interface Tourist {
   lastSeen: string;
 }
 
-export const Dashboard: React.FC = () => {
+const DashboardMain: React.FC = () => {
   const [dashboardStats, setDashboardStats] = useState<DashboardStats>({
     activeTourists: 0,
     totalIncidents: 0,
@@ -439,4 +439,5 @@ export const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export { DashboardMain as Dashboard };
+export default DashboardMain;

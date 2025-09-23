@@ -177,3 +177,19 @@ All colors MUST be HSL. Professional gradients and semantic tokens.
 .animate-subtle-parallax {
   animation: subtle-parallax 8s ease-in-out infinite;
 }
+
+/* Remove any blue background overlays */
+span[style*="background-color: blue"],
+span[style*="background: blue"],
+div[style*="background-color: blue"],
+div[style*="background: blue"],
+.blue-overlay {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Ensure text visibility */
+h1, h2, h3, h4, h5, h6, p, span {
+  position: relative;
+  z-index: 1;
+}

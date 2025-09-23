@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Shield, LogOut } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import gosecureLogo from "@/assets/gosecure-logo.jpg";
 
 const Navbar = () => {
@@ -84,15 +85,23 @@ const Navbar = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
-              <>
-                <span className="text-sm text-muted-foreground">
-                  Welcome, {user.user_metadata?.name || user.email}
-                </span>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="" alt={user.user_metadata?.name || user.email} />
+                    <AvatarFallback className="bg-gradient-primary text-primary-foreground text-sm">
+                      {(user.user_metadata?.name || user.email)?.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium text-foreground">
+                    {user.user_metadata?.name || user.email?.split('@')[0]}
+                  </span>
+                </div>
                 <Button variant="ghost" size="sm" onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
                 </Button>
-              </>
+              </div>
             ) : (
               <>
                 <Button variant="ghost" size="sm" asChild>
@@ -139,8 +148,16 @@ const Navbar = () => {
               <div className="pt-4 border-t border-border space-y-2">
                 {user ? (
                   <>
-                    <div className="px-4 py-2 text-sm text-muted-foreground">
-                      Welcome, {user.user_metadata?.name || user.email}
+                    <div className="px-4 py-2 flex items-center space-x-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src="" alt={user.user_metadata?.name || user.email} />
+                        <AvatarFallback className="bg-gradient-primary text-primary-foreground text-sm">
+                          {(user.user_metadata?.name || user.email)?.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm font-medium text-foreground">
+                        {user.user_metadata?.name || user.email?.split('@')[0]}
+                      </span>
                     </div>
                     <Button variant="ghost" className="w-full justify-start" onClick={handleSignOut}>
                       <LogOut className="w-4 h-4 mr-2" />
