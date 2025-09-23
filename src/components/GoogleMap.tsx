@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { MapPin, Users, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import OpenStreetMap from '@/components/OpenStreetMap';
 
 declare global {
   interface Window {
@@ -255,7 +254,7 @@ export const GoogleMap: React.FC = () => {
           Real-Time Location Tracking
         </CardTitle>
         <CardDescription>
-          Live map showing tourist locations and incidents (OpenStreetMap)
+          Live map showing tourist locations and incidents
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -284,8 +283,8 @@ export const GoogleMap: React.FC = () => {
             </div>
           </div>
           
-          {/* OpenStreetMap Container */}
-          <OpenStreetMap className="w-full" height="384px" />
+          {/* Google Maps Container */}
+          <div ref={mapRef} className="w-full h-96 rounded-lg border" />
         </div>
       </CardContent>
     </Card>
